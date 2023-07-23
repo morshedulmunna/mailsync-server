@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @unique @default(cuid())
+  name     String?
+  email    String  @unique
+  password String
+
+  refrash_token String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sentEmails     Email[] @relation("sendEmails")
+  receivedEmails Email[] @relation("receivedEmails")
+}
+
+model Email {
+  id String @id @unique @default(cuid())
+
+  sendingEmail String
+  subject      String
+  body         String
+
+  isSent      Boolean @default(true)
+  isRead      Boolean @default(false)
+  isImportant Boolean @default(false)
+  isDraft     Boolean @default(false)
+  isSpam      Boolean @default(false)
+  isTrash     Boolean @default(false)
+
+  sentAt    DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sendEmails   User?   @relation("sendEmails", fields: [sendEmailsId], references: [id])
+  sendEmailsId String?
+
+  receivedEmails   User?   @relation("receivedEmails", fields: [receivedEmailsID], references: [id])
+  receivedEmailsID String?
+}

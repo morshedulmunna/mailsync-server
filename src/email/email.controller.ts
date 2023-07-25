@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Prisma } from '@prisma/client';
 import { GetCurrentUserById } from 'src/utils/GetCurrentUserId.decoder';
@@ -61,6 +69,12 @@ export class EmailController {
     const skipNumber = parseInt(skip);
     const takeNumber = parseInt(take);
     return this.emailService.getInboxEmail(userId, skipNumber, takeNumber);
+  }
+  // get Email Details
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Get(':emailId')
+  gettingEmailDetails(@Param('emailId') emailId: string) {
+    return this.emailService.gettingEmailDetails(emailId);
   }
 
   // @Get()

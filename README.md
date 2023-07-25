@@ -11,7 +11,7 @@
 
 - /api/v1/email/inbox?skip=0&take=20 => GET -> Getting Inbox Emails with Pagination (Done)
 
-- /api/v1/email/:emailId => GET by ID => Getting Single Emails Details with Pagination (Pending)
+- /api/v1/email/:emailId => GET by ID => Getting Single Emails Details with Pagination (Done)
 
 - /api/v1/email/unread => PATCH => Update email read/unread (pending)
 - /api/v1/email/unread?skip=0&take=20 => Getting Unread Emails with Pagination (Pending)

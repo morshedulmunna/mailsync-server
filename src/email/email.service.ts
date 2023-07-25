@@ -95,4 +95,13 @@ export class EmailService {
       take: take,
     });
   }
+
+  // Email Details
+  async gettingEmailDetails(emailId: string) {
+    return this.prisma.email.findUnique({
+      where: {
+        id: emailId,
+      },
+    });
+  }
 }

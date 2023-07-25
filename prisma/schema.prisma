@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  draftEmails    Email[] @relation("draftEmails")
   sentEmails     Email[] @relation("sendEmails")
   receivedEmails Email[] @relation("receivedEmails")
 }
@@ -41,6 +42,9 @@ model Email {
 
   sentAt    DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  draftEmails   User?   @relation("draftEmails", fields: [draftEmailsId], references: [id])
+  draftEmailsId String?
 
   sendEmails   User?   @relation("sendEmails", fields: [sendEmailsId], references: [id])
   sendEmailsId String?

@@ -104,4 +104,41 @@ export class EmailService {
       },
     });
   }
+
+  // Update Reading Emails
+  async updateReadEmail(emailId: string) {
+    return this.prisma.email.update({
+      where: {
+        id: emailId,
+      },
+      data: {
+        isRead: true,
+      },
+    });
+  }
+
+  // Getting Unread Emails with Pagination
+  async getUnreadEmails(userId: string, skip: number, take: number) {
+    if (!userId) throw new NotAcceptableException('User Data Not Found');
+
+    return this.prisma.email.findMany({
+      where: {
+        isRead: false,
+      },
+      skip: skip,
+      take: take,
+    });
+  }
+
+  // Update Reading Emails
+  async updateImportantEmail(emailId: string) {
+    return this.prisma.email.update({
+      where: {
+        id: emailId,
+      },
+      data: {
+        isImportant: true,
+      },
+    });
+  }
 }

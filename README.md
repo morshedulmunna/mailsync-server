@@ -13,8 +13,8 @@
 
 - /api/v1/email/:emailId => GET by ID => Getting Single Emails Details with Pagination (Done)
 
-- /api/v1/email/unread => PATCH => Update email read/unread (pending)
-- /api/v1/email/unread?skip=0&take=20 => Getting Unread Emails with Pagination (Pending)
+- /api/v1/email/read/:emailId => PATCH => Update email read/unread (Done)
+- /api/v1/email/unread?skip=0&take=20 => Getting Unread Emails with Pagination (Pending) =>Error
 
 - /api/v1/email/important => PATCH => Update email importance (pending)
 - /api/v1/email/important?skip=0&take=20 => Getting Importance Emails with Pagination (Pending)

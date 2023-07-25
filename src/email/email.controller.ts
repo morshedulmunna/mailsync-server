@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -47,6 +48,7 @@ export class EmailController {
   ) {
     return this.emailService.draftEmail(createEmailDto, userId);
   }
+
   // getDraftEmail Email
   @UseGuards(AuthGuard('jwt-auth'))
   @Get('/draft')
@@ -70,30 +72,49 @@ export class EmailController {
     const takeNumber = parseInt(take);
     return this.emailService.getInboxEmail(userId, skipNumber, takeNumber);
   }
+
   // get Email Details
   @UseGuards(AuthGuard('jwt-auth'))
   @Get(':emailId')
   gettingEmailDetails(@Param('emailId') emailId: string) {
     return this.emailService.gettingEmailDetails(emailId);
   }
+  // Email Reading Update Patch
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Patch('/read/:emailId')
+  updateReadEmail(@Param('emailId') emailId: string) {
+    return this.emailService.updateReadEmail(emailId);
+  }
 
-  // @Get()
-  // findAll() {
-  //   return this.emailService.findAll();
-  // }
+  // Getting Unread Email by Pagination
+  // TODO => Getting Error why don't return anything
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Get('unread')
+  getUnreadEmails(
+    @Query() { skip, take }: { skip: string; take: string },
+    @GetCurrentUserById() userId: string,
+  ) {
+    console.log(userId);
+    const skipNumber = parseInt(skip);
+    const takeNumber = parseInt(take);
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.emailService.findOne(+id);
-  // }
+    return 'This is Unread Email Service';
+    // return this.emailService.getUnreadEmails(userId, skipNumber, takeNumber);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateEmailDto: any) {
-  //   return this.emailService.update(+id, updateEmailDto);
-  // }
+  // Email Reading Update Patch
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Patch('/important/:emailId')
+  updateImportantEmail(@Param('emailId') emailId: string) {
+    return this.emailService.updateImportantEmail(emailId);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.emailService.remove(+id);
-  // }
+  // Email Reading Update Patch
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Get('/important')
+  getImportantEmail(@Query() { skip, take }: { skip: string; take: string }) {
+    const skipNumber = parseInt(skip);
+    const takeNumber = parseInt(take);
+    return 'sds';
+  }
 }

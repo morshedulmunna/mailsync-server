@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -75,10 +76,11 @@ export class EmailController {
 
   // get Email Details
   @UseGuards(AuthGuard('jwt-auth'))
-  @Get(':emailId')
+  @Get('/details/:emailId')
   gettingEmailDetails(@Param('emailId') emailId: string) {
     return this.emailService.gettingEmailDetails(emailId);
   }
+
   // Email Reading Update Patch
   @UseGuards(AuthGuard('jwt-auth'))
   @Patch('/read/:emailId')
@@ -87,34 +89,64 @@ export class EmailController {
   }
 
   // Getting Unread Email by Pagination
-  // TODO => Getting Error why don't return anything
   @UseGuards(AuthGuard('jwt-auth'))
-  @Get('unread')
+  @Get('/unread')
   getUnreadEmails(
-    @Query() { skip, take }: { skip: string; take: string },
     @GetCurrentUserById() userId: string,
+    @Query() { skip, take }: { skip: string; take: string },
   ) {
-    console.log(userId);
     const skipNumber = parseInt(skip);
     const takeNumber = parseInt(take);
+    console.log(skipNumber, takeNumber);
 
-    return 'This is Unread Email Service';
-    // return this.emailService.getUnreadEmails(userId, skipNumber, takeNumber);
+    return this.emailService.getUnreadEmails(userId, skipNumber, takeNumber);
   }
 
-  // Email Reading Update Patch
+  // Email Important Update Patch
   @UseGuards(AuthGuard('jwt-auth'))
   @Patch('/important/:emailId')
   updateImportantEmail(@Param('emailId') emailId: string) {
     return this.emailService.updateImportantEmail(emailId);
   }
 
-  // Email Reading Update Patch
+  // Email Important Update Patch
   @UseGuards(AuthGuard('jwt-auth'))
   @Get('/important')
-  getImportantEmail(@Query() { skip, take }: { skip: string; take: string }) {
+  getImportantEmails(
+    @GetCurrentUserById() userId: string,
+    @Query() { skip, take }: { skip: string; take: string },
+  ) {
     const skipNumber = parseInt(skip);
     const takeNumber = parseInt(take);
-    return 'sds';
+    console.log(skipNumber, takeNumber);
+
+    return this.emailService.getImportantEmails(userId, skipNumber, takeNumber);
+  }
+
+  // Email Spam Update Patch
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Patch('/spam/:emailId')
+  updateSpamEmail(@Param('emailId') emailId: string) {
+    return this.emailService.updateSpamEmail(emailId);
+  }
+  // Email Spam Update Patch
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Get('/important')
+  getSpamEmails(
+    @GetCurrentUserById() userId: string,
+    @Query() { skip, take }: { skip: string; take: string },
+  ) {
+    const skipNumber = parseInt(skip);
+    const takeNumber = parseInt(take);
+    console.log(skipNumber, takeNumber);
+
+    return this.emailService.getSpamEmails(userId, skipNumber, takeNumber);
+  }
+
+  // Delete Email by ID
+  @UseGuards(AuthGuard('jwt-auth'))
+  @Delete('/delete/:emailId')
+  deleteEmail(@Query('emailId') emailId: string) {
+    return this.emailService.deleteEmail(emailId);
   }
 }

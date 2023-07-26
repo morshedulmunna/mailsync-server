@@ -14,13 +14,12 @@
 - /api/v1/email/:emailId => GET by ID => Getting Single Emails Details with Pagination (Done)
 
 - /api/v1/email/read/:emailId => PATCH => Update email read/unread (Done)
-- /api/v1/email/unread?skip=0&take=20 => Getting Unread Emails with Pagination (Pending) =>Error
+- /api/v1/email/unread?skip=0&take=20 => Getting Unread Emails with Pagination (Done)
 
-- /api/v1/email/important => PATCH => Update email importance (pending)
-- /api/v1/email/important?skip=0&take=20 => Getting Importance Emails with Pagination (Pending)
+- /api/v1/email/important => PATCH => Update email importance (Done)
+- /api/v1/email/important?skip=0&take=20 => Getting Importance Emails with Pagination (Done)
 
-- /api/v1/email/spam => PATCH
-- /api/v1/email/spam => GET
+- /api/v1/email/spam => PATCH Update email Spam (Done)
+- /api/v1/email/spam => Getting Spam Emails with Pagination (Done)
 
-- /api/v1/email-trash/:emailId => DELETE
-- /api/v1/email-trash?skip=0&take=20 => Get
+- /api/v1/email/delete/:emailId => DELETE email by Id (Done)

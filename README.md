@@ -1,5 +1,5 @@
 # MailSyncs Api Documentation.
-
+Server Link: https://mailsyncs-server.onrender.com/api/v1
 ## Introduction
 
 This reference is your key to a comprehensive understanding of the mailsyncs API.

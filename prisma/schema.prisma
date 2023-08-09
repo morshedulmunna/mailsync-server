@@ -43,12 +43,12 @@ model Email {
   sentAt    DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  draftEmails   User?   @relation("draftEmails", fields: [draftEmailsId], references: [id])
+  draftEmails   User?   @relation("draftEmails", fields: [draftEmailsId], references: [id], onDelete: Cascade)
   draftEmailsId String?
 
-  sendEmails   User?   @relation("sendEmails", fields: [sendEmailsId], references: [id])
+  sendEmails   User?   @relation("sendEmails", fields: [sendEmailsId], references: [id], onDelete: Cascade)
   sendEmailsId String?
 
-  receivedEmails   User?   @relation("receivedEmails", fields: [receivedEmailsID], references: [id])
+  receivedEmails   User?   @relation("receivedEmails", fields: [receivedEmailsID], references: [id], onDelete: Cascade)
   receivedEmailsID String?
 }

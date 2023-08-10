@@ -63,13 +63,28 @@ export class EmailService {
   // Get Sending Email for user
   async getSendingEmail(userId: string, skip: number, take: number) {
     if (!userId) throw new NotAcceptableException('User Data Not Found');
-    return this.prisma.email.findMany({
+
+    const count = await this.prisma.email.count({
       where: {
-        AND: [{ isSent: true }, { sendEmailsId: userId }],
+        sendEmailsId: userId,
+      },
+    });
+
+    const emails = await this.prisma.email.findMany({
+      where: {
+        sendEmailsId: userId,
       },
       skip: skip,
       take: take,
+      orderBy: {
+        sentAt: 'desc', // or 'asc' for ascending order
+      },
     });
+
+    return {
+      emails,
+      count,
+    };
   }
 
   // Get Draft Email for user
@@ -87,13 +102,27 @@ export class EmailService {
   // Inbox Email Getting with Pagination
   async getInboxEmail(userId: string, skip: number, take: number) {
     if (!userId) throw new NotAcceptableException('User Data Not Found');
-    return this.prisma.email.findMany({
+
+    const count = await this.prisma.email.count({
+      where: {
+        receivedEmailsID: userId,
+      },
+    });
+
+    const emails = await this.prisma.email.findMany({
       where: {
         receivedEmailsID: userId,
       },
       skip: skip,
       take: take,
+      orderBy: {
+        sentAt: 'desc', // or 'asc' for ascending order
+      },
     });
+    return {
+      emails,
+      count,
+    };
   }
 
   // Email Details
